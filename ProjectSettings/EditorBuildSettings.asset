@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Games/Lobby/Lobby.unity
+    guid: e9017d5f96b9f09489b4b37e1d6eb914
+  - enabled: 0
+    path: Assets/Games/Lobby/Lobby1.unity
+    guid: 0ddefce170e320a4d874e2370f1b258d
+  - enabled: 1
+    path: Assets/Games/BlockParty/BlockParty.unity
+    guid: 6a5c9bca762169c449bff0ae9dbf3001
+  - enabled: 1
+    path: Assets/Games/Race/Scenes/Track.unity
+    guid: 39ca210972bd1064aa3abdf018626300
+  - enabled: 1
+    path: Assets/Games/Doll/Doll.unity
+    guid: 41d1f5e57a78e064b84ec135a5d26fb2
+  - enabled: 1
+    path: Assets/Games/UltimateKnockout/UltimateKnockout.unity
+    guid: db687da98643f1749bebff8a661a2d4f
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
