@@ -9,6 +9,10 @@ public class SelectCameraTypeMenu : MonoBehaviour
     private bool _cameraTypeSelected = false;
     [SerializeField] private GameObject _car;
     [SerializeField] private GameObject _startMenu;
+    [SerializeField] private GameObject _canvasGame;
+
+    private ICameraOperation _myCameraManager;
+
     //[SerializeField] private AudioSource SkidSound;
     void Start()
     {
@@ -21,7 +25,7 @@ public class SelectCameraTypeMenu : MonoBehaviour
 
     void OnApplicationFocus(bool hasFocus)
     {
-        if (hasFocus && _startMenu.active)
+        if (hasFocus && _startMenu.activeSelf)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -48,9 +52,12 @@ public class SelectCameraTypeMenu : MonoBehaviour
     
     private void CameraSelected()
     {
-        _creatorCamera.Initialize(_car);
+        _myCameraManager = _creatorCamera.FactoryMethod(_car);
+        _myCameraManager.Initialize(_car);
+        
         _cameraTypeSelected = true;
         _startMenu.SetActive(false);
+        _canvasGame.SetActive(true);
         Time.timeScale = 1;
         AudioListener.pause = false;
         Cursor.visible = false;

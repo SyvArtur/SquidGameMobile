@@ -4,10 +4,10 @@ using UnityEngine;
 
 class CreatorFirstPersonCamera: CreatorCamera
 {
-        public override ICameraOperation FactoryMethod(GameObject car)
-        {
-            FirstPersonCamera camera = car.AddComponent<FirstPersonCamera>();
-            return camera;
-        }
+    public override ICameraOperation FactoryMethod(GameObject car)
+    {
+        FirstPersonCamera camera = car.AddComponent<FirstPersonCamera>();
+        return camera;
+    }
 }
 

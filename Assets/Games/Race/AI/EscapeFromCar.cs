@@ -22,6 +22,7 @@ public class EscapeFromCar : Agent
     private float _distanceBetweenCarAndAgent;
     private float _angleBetweenCarAndAgent;
     [SerializeField] private bool train;
+    private Rigidbody _rigidbody;
     //private int _animIDSpeed;
 
     public override void CollectObservations(VectorSensor sensor)
@@ -73,6 +74,7 @@ public class EscapeFromCar : Agent
     {
         _amogusAnimator.SetFloat("Speed", _moveSpeed);
         _rayPerceptionSensor = GetComponent<RayPerceptionSensorComponent3D>();
+        _rigidbody = GetComponent<Rigidbody>();
         if (train)
         {
             
@@ -164,6 +166,7 @@ public class EscapeFromCar : Agent
         }
         
         _amogusAnimator.SetFloat("Speed", _moveSpeed);
+        //_rigidbody.MovePosition(_rigidbody.position + (Vector3.forward * _moveSpeed * Time.deltaTime));
         transform.Translate(Vector3.forward * _moveSpeed * Time.deltaTime);
 
 

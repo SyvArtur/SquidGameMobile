@@ -22,6 +22,8 @@ public class VirtualDPad : OnScreenControl, IPointerDownHandler, IPointerUpHandl
 
     private Vector3 startPos;
 
+    [HideInInspector] public Vector2 delta;
+
     protected override string controlPathInternal
     {
         get => dPadControlPath;
@@ -32,6 +34,8 @@ public class VirtualDPad : OnScreenControl, IPointerDownHandler, IPointerUpHandl
     {
         if (centerArea == null)
             centerArea = GetComponent<RectTransform>();
+
+        delta = new Vector2(0, 0);
 
         Vector2 center = new Vector2(0.5f, 0.5f);
         centerArea.pivot = center;
@@ -51,15 +55,34 @@ public class VirtualDPad : OnScreenControl, IPointerDownHandler, IPointerUpHandl
         if (eventData == null)
             throw new System.ArgumentNullException(nameof(eventData));
 
-        OnDrag(eventData);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(handle.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out var position);
+        //delta = position;
+
+
+        if (direction == VirtualDPadDirection.Horizontal)
+        {
+            position.y = 0;
+        }
+        else if (direction == VirtualDPadDirection.Vertical)
+        {
+            position.x = 0;
+        }
+
+        Vector2 buttonDelta = Vector2.ClampMagnitude(position, uiMovementRange);
+        handle.anchoredPosition = startPos + (Vector3)buttonDelta;
+
+        delta = SanitizePosition(position);
+
+        Debug.Log(delta.x + "  " + delta.y);
+        //OnDrag(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData == null)
+        /*if (eventData == null)
             throw new System.ArgumentNullException(nameof(eventData));
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(handle.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out var position);
+*/
+/*        RectTransformUtility.ScreenPointToLocalPointInRectangle(handle.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out var position);
         Vector2 delta = position;
 
         if (direction == VirtualDPadDirection.Horizontal) delta.y = 0;
@@ -69,12 +92,14 @@ public class VirtualDPad : OnScreenControl, IPointerDownHandler, IPointerUpHandl
         handle.anchoredPosition = startPos + (Vector3)buttonDelta;
 
         Vector2 newPos = SanitizePosition(delta);
-        SendValueToControl(newPos);
+        Debug.Log(newPos.x + "  " + newPos.y);
+        SendValueToControl(newPos);*/
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         handle.anchoredPosition = startPos;
+        delta = new Vector2(0, 0);
         SendValueToControl(Vector2.zero);
     }
 

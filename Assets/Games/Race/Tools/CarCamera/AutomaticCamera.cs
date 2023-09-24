@@ -5,11 +5,13 @@ using UnityEngine;
 public class AutomaticCamera : MonoBehaviour, ICameraOperation
 {
     private GameObject _car;
+    private Camera _mainCamera;
 
     public void Initialize(GameObject car)
     {
         _car = car;
-        Camera.main.GetComponent<Transform>().position = _car.GetComponent<Transform>().position + GetShiftPointTroughAngle(_car);
+        _mainCamera = Camera.main;
+        _mainCamera.GetComponent<Transform>().position = _car.GetComponent<Transform>().position + GetShiftPointTroughAngle(_car);
     }
 
     void FixedUpdate()
@@ -23,11 +25,10 @@ public class AutomaticCamera : MonoBehaviour, ICameraOperation
     public void CameraWork()
     {
         Vector3 shiftPoint = GetShiftPointTroughAngle(_car);
-        Transform mainCameraTransform = Camera.main.GetComponent<Transform>();
+        Transform mainCameraTransform = _mainCamera.GetComponent<Transform>();
         Transform carTransform = _car.GetComponent<Transform>();
 
         mainCameraTransform.position = Vector3.Lerp(mainCameraTransform.position, (carTransform.position + shiftPoint), _cameraStickiness * Time.deltaTime);
-
         mainCameraTransform.LookAt(carTransform);
     }
 

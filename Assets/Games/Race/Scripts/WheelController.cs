@@ -15,8 +15,11 @@ public class WheelController : MonoBehaviour
     [SerializeField] private float _wheelAcceleration;
     [SerializeField] private float _wheelMaxSpeed;
 
-
     [SerializeField] private Rigidbody _carRB;
+
+    [SerializeField] VirtualDPad _virtualDPadVertical;
+
+    [SerializeField] VirtualDPad _virtualDPadHorizontal;
 
     // Update is called once per frame
     void Update()
@@ -33,9 +36,11 @@ public class WheelController : MonoBehaviour
             _steerableWheels[i].WheelCol.motorTorque = -Mathf.Lerp(_steerableWheels[i].WheelCol.motorTorque, 0, Time.deltaTime * _wheelAcceleration);
 
 
-            float horizontal = -CarController.carInput.Car.WASD.ReadValue<Vector2>().x;
-            float vertical = CarController.carInput.Car.WASD.ReadValue<Vector2>().y;
-
+            /*            float horizontal = -CarController.carInput.Car.WASD.ReadValue<Vector2>().x;
+                        float vertical = CarController.carInput.Car.WASD.ReadValue<Vector2>().y;*/
+            float horizontal = -_virtualDPadHorizontal.delta.x;
+            float vertical = _virtualDPadVertical.delta.y;
+            
             if (vertical > 0.1)
             {
                 _steerableWheels[i].WheelCol.motorTorque = -Mathf.Lerp(_steerableWheels[i].WheelCol.motorTorque, _wheelMaxSpeed, Time.deltaTime * _wheelAcceleration);

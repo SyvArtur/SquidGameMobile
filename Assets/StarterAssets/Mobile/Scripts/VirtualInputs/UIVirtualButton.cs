@@ -25,7 +25,6 @@ public class UIVirtualButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private Color buttonNormalColor;
 
     private Button button;
-
     /*    private void OnValidate()
         {
             if (mayBeActivated)
